@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "228230438732",
+    "project_id": "proyectomovil-17c4c",
+    "storage_bucket": "proyectomovil-17c4c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228230438732:android:6bd6cb5ab68102dfe939e9",
+        "android_client_info": {
+          "package_name": "com.cohaila.proyectomovil"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB2e56tPt_Eg0mFtgiyvrSQYMc-gvdH9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
