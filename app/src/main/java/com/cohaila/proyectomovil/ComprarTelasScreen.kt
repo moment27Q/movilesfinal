@@ -63,11 +63,11 @@ fun ComprarTelasScreen(
 
     // Categorías disponibles
     val categorias = listOf(
-        CategoriaFiltro("Todas", Icons.Default.List),
-        CategoriaFiltro("Algodón", Icons.Default.CheckCircle),
-        CategoriaFiltro("Poliéster", Icons.Default.Star),
-        CategoriaFiltro("Seda", Icons.Default.Info),
-        CategoriaFiltro("Lino", Icons.Default.Check)
+        CategoriaFiltro("Todas", Icons.Filled.List),
+        CategoriaFiltro("Algodón", Icons.Filled.CheckCircle),
+        CategoriaFiltro("Poliéster", Icons.Filled.Star),
+        CategoriaFiltro("Seda", Icons.Filled.Info),
+        CategoriaFiltro("Lino", Icons.Filled.Check)
     )
 
     // Cargar telas desde Firestore
@@ -158,13 +158,13 @@ fun ComprarTelasScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Volver")
                     }
                 },
                 actions = {
                     IconButton(onClick = { mostrarFiltros = !mostrarFiltros }) {
                         Icon(
-                            Icons.Default.Search,
+                            Icons.Filled.Search,
                             contentDescription = "Filtros",
                             tint = TexIAColors.Primary
                         )
@@ -202,12 +202,12 @@ fun ComprarTelasScreen(
                             modifier = Modifier.fillMaxWidth(),
                             placeholder = { Text("Buscar telas...") },
                             leadingIcon = {
-                                Icon(Icons.Default.Search, contentDescription = null)
+                                Icon(Icons.Filled.Search, contentDescription = null)
                             },
                             trailingIcon = {
                                 if (searchQuery.isNotEmpty()) {
                                     IconButton(onClick = { searchQuery = "" }) {
-                                        Icon(Icons.Default.Close, contentDescription = "Limpiar")
+                                        Icon(Icons.Filled.Close, contentDescription = "Limpiar")
                                     }
                                 }
                             },
@@ -282,7 +282,7 @@ fun ComprarTelasScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            Icons.Default.Warning,
+                            Icons.Filled.Warning,
                             contentDescription = null,
                             tint = TexIAColors.Error
                         )
@@ -310,7 +310,7 @@ fun ComprarTelasScreen(
                         verticalArrangement = Arrangement.Center
                     ) {
                         Icon(
-                            Icons.Default.ShoppingCart,
+                            Icons.Filled.ShoppingCart,
                             contentDescription = null,
                             modifier = Modifier.size(80.dp),
                             tint = Color(0xFFE5E7EB)
@@ -470,7 +470,7 @@ fun TelaCard(tela: Tela) {
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Icon(
-                                Icons.Default.List,
+                                Icons.Filled.List,
                                 contentDescription = null,
                                 tint = if (tela.stockDisponible > 100)
                                     TexIAColors.Secondary
@@ -510,14 +510,14 @@ fun TelaCard(tela: Tela) {
                 ) {
                     InfoBadge(
                         modifier = Modifier.weight(1f),
-                        icon = Icons.Default.LocationOn,
+                        icon = Icons.Filled.LocationOn,
                         label = "Ubicación",
                         value = tela.ubicacion,
                         color = TexIAColors.Teal
                     )
                     InfoBadge(
                         modifier = Modifier.weight(1f),
-                        icon = Icons.Default.ShoppingCart,
+                        icon = Icons.Filled.ShoppingCart,
                         label = "Órdenes",
                         value = "${tela.ordenesNacionales}",
                         color = TexIAColors.Purple
@@ -550,7 +550,7 @@ fun TelaCard(tela: Tela) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            Icons.Default.Person,
+                            Icons.Filled.Person,
                             contentDescription = null,
                             tint = Color(0xFF6B7280),
                             modifier = Modifier.size(16.dp)
@@ -590,7 +590,7 @@ fun TelaCard(tela: Tela) {
                         )
                     ) {
                         Icon(
-                            Icons.Default.ShoppingCart,
+                            Icons.Filled.ShoppingCart,
                             contentDescription = null,
                             modifier = Modifier.size(18.dp)
                         )

@@ -16,12 +16,13 @@ object Destinations {
     const val PROGRESO = "progreso"
     const val COMPRAR_TELAS = "comprar_telas"
     const val INVENTARIO_TELAS = "inventario_telas"
+    const val PERFIL = "perfil"
 }
 
 @Composable
 fun AuthApp() {
     val navController = rememberNavController()
-    AuthNavGraph(navController)
+    AuthNavGraph(navController = navController)
 }
 
 @Composable
@@ -84,9 +85,11 @@ fun AuthNavGraph(navController: NavHostController) {
                 onNavigateToInventario = {
                     navController.navigate(Destinations.INVENTARIO_TELAS)
                 },
+                onNavigateToPerfil = {
+                    navController.navigate(Destinations.PERFIL)
+                },
                 onIniciarTarea = { tareaId ->
-                    // Aquí puedes navegar a detalle de tarea
-                    // navController.navigate("tarea_detalle/$tareaId")
+                    // Implement task start logic if needed
                 },
                 onLogout = {
                     FirebaseAuth.getInstance().signOut()
@@ -149,6 +152,15 @@ fun AuthNavGraph(navController: NavHostController) {
 
             ProgresoScreen(
                 userId = userId,
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        // Pantalla de Perfil
+        composable(Destinations.PERFIL) {
+            PerfilScreen(
                 onNavigateBack = {
                     navController.popBackStack()
                 }

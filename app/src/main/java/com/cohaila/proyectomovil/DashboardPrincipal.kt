@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +51,6 @@ data class TareaResumen(
     val fechaCreacion: com.google.firebase.Timestamp? = null
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardPrincipal(
     nombreUsuario: String = "Usuario",
@@ -60,6 +60,7 @@ fun DashboardPrincipal(
     onNavigateToProgreso: () -> Unit = {},
     onNavigateToComprarTelas: () -> Unit = {},
     onNavigateToInventario: () -> Unit = {},
+    onNavigateToPerfil: () -> Unit = {},
     onIniciarTarea: (String) -> Unit = {},
     onLogout: () -> Unit = {}
 ) {
@@ -73,7 +74,6 @@ fun DashboardPrincipal(
 
     val db = FirebaseFirestore.getInstance()
 
-    // Cargar datos desde Firestore
     LaunchedEffect(userId) {
         try {
             isLoading = true
@@ -189,7 +189,7 @@ fun DashboardPrincipal(
                             )
                     ) {
                         Icon(
-                            Icons.Default.Menu,
+                            Icons.Filled.Menu,
                             contentDescription = "Menú",
                             tint = TexIAColors.Primary
                         )
@@ -213,7 +213,7 @@ fun DashboardPrincipal(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            Icons.Default.Warning,
+                            Icons.Filled.Warning,
                             contentDescription = null,
                             tint = TexIAColors.Error
                         )
@@ -237,7 +237,7 @@ fun DashboardPrincipal(
                     modifier = Modifier.weight(1f),
                     numero = if (isLoading) "-" else tareasActivas.toString(),
                     label = "Órdenes\nActivas",
-                    icon = Icons.Default.Build,
+                    icon = Icons.Filled.Build,
                     gradientColors = listOf(TexIAColors.Secondary, TexIAColors.Teal)
                 )
 
@@ -245,7 +245,7 @@ fun DashboardPrincipal(
                     modifier = Modifier.weight(1f),
                     numero = if (isLoading) "-" else tareasPendientes.toString(),
                     label = "Órdenes\nPendientes",
-                    icon = Icons.Default.Star,
+                    icon = Icons.Filled.Star,
                     gradientColors = listOf(TexIAColors.Accent, Color(0xFFF97316))
                 )
             }
@@ -277,7 +277,7 @@ fun DashboardPrincipal(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                Icons.Default.Info,
+                                Icons.Filled.Info,
                                 contentDescription = null,
                                 tint = TexIAColors.Purple,
                                 modifier = Modifier.size(24.dp)
@@ -299,7 +299,7 @@ fun DashboardPrincipal(
                         }
                     }
                     Icon(
-                        Icons.Default.KeyboardArrowRight,
+                        Icons.Filled.KeyboardArrowRight,
                         contentDescription = null,
                         tint = Color(0xFFD1D5DB)
                     )
@@ -369,7 +369,7 @@ fun DashboardPrincipal(
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Icon(
-                                    Icons.Default.CheckCircle,
+                                    Icons.Filled.CheckCircle,
                                     contentDescription = null,
                                     modifier = Modifier.size(80.dp),
                                     tint = Color(0xFFE5E7EB)
@@ -417,7 +417,7 @@ fun DashboardPrincipal(
                 ) {
                     AccionRapidaButton(
                         modifier = Modifier.weight(1f),
-                        icon = Icons.Default.ShoppingCart,
+                        icon = Icons.Filled.ShoppingCart,
                         label = "Comprar\nTelas",
                         gradientColors = listOf(TexIAColors.Primary, TexIAColors.PrimaryDark),
                         onClick = onNavigateToComprarTelas
@@ -425,7 +425,7 @@ fun DashboardPrincipal(
 
                     AccionRapidaButton(
                         modifier = Modifier.weight(1f),
-                        icon = Icons.Default.List,
+                        icon = Icons.Filled.List,
                         label = "Ver\nInventario",
                         gradientColors = listOf(TexIAColors.Teal, TexIAColors.Secondary),
                         onClick = onNavigateToInventario
@@ -439,7 +439,7 @@ fun DashboardPrincipal(
                 ) {
                     AccionRapidaButton(
                         modifier = Modifier.weight(1f),
-                        icon = Icons.Default.Warning,
+                        icon = Icons.Filled.Warning,
                         label = "Registrar\nDefecto",
                         gradientColors = listOf(TexIAColors.Error, Color(0xFFDC2626)),
                         onClick = onNavigateToRegistrarDefecto
@@ -447,7 +447,7 @@ fun DashboardPrincipal(
 
                     AccionRapidaButton(
                         modifier = Modifier.weight(1f),
-                        icon = Icons.Default.DateRange,
+                        icon = Icons.Filled.DateRange,
                         label = "Ver\nProgreso",
                         gradientColors = listOf(TexIAColors.Purple, Color(0xFF7C3AED)),
                         onClick = onNavigateToProgreso
@@ -498,7 +498,7 @@ fun DashboardPrincipal(
                         }
                         IconButton(onClick = { showMenu = false }) {
                             Icon(
-                                Icons.Default.Close,
+                                Icons.Filled.Close,
                                 contentDescription = "Cerrar",
                                 tint = Color(0xFF6B7280)
                             )
@@ -509,20 +509,31 @@ fun DashboardPrincipal(
 
                     // Opciones del menú
                     MenuOption(
-                        icon = Icons.Default.Home,
-                        label = "Inicio",
-                        onClick = { showMenu = false }
+                        icon = Icons.Filled.Person,
+                        label = "Mi Perfil",
+                        onClick = {
+                            showMenu = false
+                            onNavigateToPerfil()
+                        }
                     )
                     MenuOption(
-                        icon = Icons.Default.List,
-                        label = "Mis Órdenes",
+                        icon = Icons.Filled.Home,
+                        label = "Inicio",
+                        onClick = {
+                            showMenu = false
+                            // Ya estamos en inicio
+                        }
+                    )
+                    MenuOption(
+                        icon = Icons.Filled.Build,
+                        label = "Tareas",
                         onClick = {
                             showMenu = false
                             onNavigateToTareas()
                         }
                     )
                     MenuOption(
-                        icon = Icons.Default.ShoppingCart,
+                        icon = Icons.Filled.ShoppingCart,
                         label = "Comprar Telas",
                         onClick = {
                             showMenu = false
@@ -530,7 +541,7 @@ fun DashboardPrincipal(
                         }
                     )
                     MenuOption(
-                        icon = Icons.Default.List,
+                        icon = Icons.Filled.List,
                         label = "Inventario de Telas",
                         onClick = {
                             showMenu = false
@@ -538,7 +549,7 @@ fun DashboardPrincipal(
                         }
                     )
                     MenuOption(
-                        icon = Icons.Default.Warning,
+                        icon = Icons.Filled.Warning,
                         label = "Registrar Defecto",
                         onClick = {
                             showMenu = false
@@ -546,25 +557,12 @@ fun DashboardPrincipal(
                         }
                     )
                     MenuOption(
-                        icon = Icons.Default.DateRange,
+                        icon = Icons.Filled.DateRange,
                         label = "Ver Progreso",
                         onClick = {
                             showMenu = false
                             onNavigateToProgreso()
                         }
-                    )
-
-                    Divider(modifier = Modifier.padding(vertical = 16.dp))
-
-                    MenuOption(
-                        icon = Icons.Default.Person,
-                        label = "Mi Perfil",
-                        onClick = { showMenu = false }
-                    )
-                    MenuOption(
-                        icon = Icons.Default.Settings,
-                        label = "Configuración",
-                        onClick = { showMenu = false }
                     )
 
                     Spacer(Modifier.weight(1f))
@@ -573,7 +571,7 @@ fun DashboardPrincipal(
                     Spacer(Modifier.height(16.dp))
 
                     MenuOption(
-                        icon = Icons.Default.ExitToApp,
+                        icon = Icons.Filled.ExitToApp,
                         label = "Cerrar Sesión",
                         onClick = {
                             showMenu = false
@@ -706,12 +704,12 @@ fun OrdenProduccionItem(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 InfoChip(
-                    icon = Icons.Default.Info,
+                    icon = Icons.Filled.Info,
                     text = tarea.tipoTela,
                     color = TexIAColors.Teal
                 )
                 InfoChip(
-                    icon = Icons.Default.Build,
+                    icon = Icons.Filled.Build,
                     text = tarea.cantidad,
                     color = TexIAColors.Purple
                 )
@@ -724,7 +722,7 @@ fun OrdenProduccionItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    Icons.Default.Notifications,
+                    Icons.Filled.Notifications,
                     contentDescription = null,
                     tint = TexIAColors.Accent,
                     modifier = Modifier.size(18.dp)
@@ -753,7 +751,7 @@ fun OrdenProduccionItem(
                 contentPadding = PaddingValues(vertical = 14.dp)
             ) {
                 Icon(
-                    if (tarea.estado == "EN_CURSO") Icons.Default.PlayArrow else Icons.Default.PlayArrow,
+                    if (tarea.estado == "EN_CURSO") Icons.Filled.PlayArrow else Icons.Filled.PlayArrow,
                     contentDescription = null,
                     modifier = Modifier.size(20.dp)
                 )
