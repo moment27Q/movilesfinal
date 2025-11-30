@@ -121,7 +121,12 @@ fun AuthNavGraph(navController: NavHostController) {
 
         // Pantalla de Tareas (pendiente de implementar)
         composable(Destinations.TAREAS) {
-            // TareasScreen(onNavigateBack = { navController.popBackStack() })
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val userId = currentUser?.uid ?: ""
+            TareasScreen(
+                userId = userId,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         // Pantalla de Registrar Defecto (pendiente de implementar)

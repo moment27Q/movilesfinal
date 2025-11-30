@@ -460,7 +460,7 @@ fun ProgresoScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(200.dp),
-                            contentAlignment = Alignment.Center
+                                contentAlignment = Alignment.Center
                         ) {
                             CircularProgressIndicator(color = TexIAColors.Primary)
                         }
@@ -513,51 +513,6 @@ fun ProgresoScreen(
                         )
                     }
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun EstadisticaMiniCard(
-    modifier: Modifier = Modifier,
-    valor: String,
-    label: String,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    color: Color
-) {
-    Card(
-        modifier = modifier.height(100.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = color.copy(alpha = 0.1f)
-        )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(12.dp),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Icon(
-                icon,
-                contentDescription = null,
-                tint = color,
-                modifier = Modifier.size(24.dp)
-            )
-            Column {
-                Text(
-                    valor,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = color
-                )
-                Text(
-                    label,
-                    fontSize = 12.sp,
-                    color = color.copy(alpha = 0.8f),
-                    fontWeight = FontWeight.Medium
-                )
             }
         }
     }
@@ -620,128 +575,142 @@ fun TareaProgresoCard(
                         )
                     }
                 }
+            }
 
-                Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(16.dp))
 
-                // Barra de progreso
-                Column {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            "Progreso",
-                            fontSize = 13.sp,
-                            color = Color(0xFF6B7280),
-                            fontWeight = FontWeight.Medium
-                        )
-                        Text(
-                            "${tarea.progreso}%",
-                            fontSize = 13.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = when {
-                                tarea.progreso == 100 -> TexIAColors.Secondary
-                                tarea.progreso >= 50 -> TexIAColors.Accent
-                                else -> TexIAColors.Purple
-                            }
-                        )
-                    }
-                    Spacer(Modifier.height(8.dp))
-                    LinearProgressIndicator(
-                        progress = (tarea.progreso / 100f).coerceIn(0f, 1f),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(8.dp)
-                            .clip(RoundedCornerShape(4.dp)),
+            // Barra de progreso
+            Column {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "Progreso",
+                        fontSize = 13.sp,
+                        color = Color(0xFF6B7280),
+                        fontWeight = FontWeight.Medium
+                    )
+                    Text(
+                        "${tarea.progreso}%",
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold,
                         color = when {
                             tarea.progreso == 100 -> TexIAColors.Secondary
                             tarea.progreso >= 50 -> TexIAColors.Accent
                             else -> TexIAColors.Purple
-                        },
-                        trackColor = Color(0xFFE5E7EB)
-                    )
-                }
-
-                Spacer(Modifier.height(16.dp))
-
-                // Información adicional
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    InfoChipProgreso(
-                        icon = Icons.Default.Build,
-                        text = "${tarea.metrosCompletados} / ${tarea.metrosTotales}",
-                        color = TexIAColors.Teal
-                    )
-
-                    if (tarea.fechaInicio != null) {
-                        InfoChipProgreso(
-                            icon = Icons.Default.DateRange,
-                            text = dateFormat.format(tarea.fechaInicio.toDate()),
-                            color = TexIAColors.Purple
-                        )
-                    }
-                }
-
-                if (tarea.estado == "COMPLETADA" && tarea.fechaCompletado != null) {
-                    Spacer(Modifier.height(12.dp))
-                    Surface(
-                        shape = RoundedCornerShape(8.dp),
-                        color = TexIAColors.Secondary.copy(alpha = 0.1f)
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                Icons.Default.CheckCircle,
-                                contentDescription = null,
-                                tint = TexIAColors.Secondary,
-                                modifier = Modifier.size(20.dp)
-                            )
-                            Spacer(Modifier.width(8.dp))
-                            Text(
-                                "Completado el ${dateFormat.format(tarea.fechaCompletado.toDate())}",
-                                fontSize = 13.sp,
-                                color = TexIAColors.Secondary,
-                                fontWeight = FontWeight.Medium
-                            )
                         }
+                    )
+                }
+                Spacer(Modifier.height(8.dp))
+                LinearProgressIndicator(
+                    progress = (tarea.progreso / 100f).coerceIn(0f, 1f),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(8.dp)
+                        .clip(RoundedCornerShape(4.dp)),
+                    color = when {
+                        tarea.progreso == 100 -> TexIAColors.Secondary
+                        tarea.progreso >= 50 -> TexIAColors.Accent
+                        else -> TexIAColors.Purple
+                    },
+                    trackColor = Color(0xFFE5E7EB)
+                )
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            // Información adicional
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                InfoChipProgreso(
+                    icon = Icons.Default.Build,
+                    text = "${tarea.metrosCompletados} / ${tarea.metrosTotales}",
+                    color = TexIAColors.Teal
+                )
+
+                if (tarea.fechaInicio != null) {
+                    InfoChipProgreso(
+                        icon = Icons.Default.DateRange,
+                        text = dateFormat.format(tarea.fechaInicio.toDate()),
+                        color = TexIAColors.Purple
+                    )
+                }
+            }
+
+            if (tarea.estado == "COMPLETADA" && tarea.fechaCompletado != null) {
+                Spacer(Modifier.height(12.dp))
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    color = TexIAColors.Secondary.copy(alpha = 0.1f)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.CheckCircle,
+                            contentDescription = null,
+                            tint = TexIAColors.Secondary,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            "Completado el ${dateFormat.format(tarea.fechaCompletado.toDate())}",
+                            fontSize = 13.sp,
+                            color = TexIAColors.Secondary,
+                            fontWeight = FontWeight.Medium
+                        )
                     }
                 }
             }
         }
     }
+}
 
-    @Composable
-    fun InfoChipProgreso(
-        icon: androidx.compose.ui.graphics.vector.ImageVector,
-        text: String,
-        color: Color
+@Composable
+fun EstadisticaMiniCard(
+    modifier: Modifier = Modifier,
+    valor: String,
+    label: String,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    color: Color
+) {
+    Card(
+        modifier = modifier.height(100.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = color.copy(alpha = 0.1f)
+        )
     ) {
-        Surface(
-            shape = RoundedCornerShape(8.dp),
-            color = color.copy(alpha = 0.1f)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    icon,
-                    contentDescription = null,
-                    tint = color,
-                    modifier = Modifier.size(14.dp)
-                )
-                Spacer(Modifier.width(4.dp))
+            Icon(
+                icon,
+                contentDescription = null,
+                tint = color,
+                modifier = Modifier.size(24.dp)
+            )
+            Column {
                 Text(
-                    text,
+                    valor,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = color
+                )
+                Text(
+                    label,
                     fontSize = 12.sp,
-                    color = color,
-                    fontWeight = FontWeight.SemiBold
+                    color = color.copy(alpha = 0.8f),
+                    fontWeight = FontWeight.Medium
                 )
             }
         }
@@ -749,6 +718,32 @@ fun TareaProgresoCard(
 }
 
 @Composable
-fun InfoChipProgreso(icon: ImageVector, text: String, color: Color) {
-    TODO("Not yet implemented")
+fun InfoChipProgreso(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    text: String,
+    color: Color
+) {
+    Surface(
+        shape = RoundedCornerShape(8.dp),
+        color = color.copy(alpha = 0.1f)
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                icon,
+                contentDescription = null,
+                tint = color,
+                modifier = Modifier.size(14.dp)
+            )
+            Spacer(Modifier.width(4.dp))
+            Text(
+                text,
+                fontSize = 12.sp,
+                color = color,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+    }
 }

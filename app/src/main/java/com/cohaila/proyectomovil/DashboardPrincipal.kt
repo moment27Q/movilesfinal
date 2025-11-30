@@ -22,13 +22,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 // Colores personalizados para industria textil
 object TexIAColors {
-    val Primary = Color(0xFF6366F1) // Índigo
-    val PrimaryDark = Color(0xFF4F46E5)
-    val Secondary = Color(0xFF10B981) // Verde esmeralda
-    val Accent = Color(0xFFF59E0B) // Ámbar
+    val Primary = Color(0xFF2563EB) // Blue 600
+    val PrimaryDark = Color(0xFF1D4ED8) // Blue 700
+    val Secondary = Color(0xFF0EA5E9) // Sky 500
+    val Accent = Color(0xFFF59E0B) // Amber
     val Error = Color(0xFFEF4444)
     val Surface = Color(0xFFF8FAFC)
     val Purple = Color(0xFF8B5CF6)
